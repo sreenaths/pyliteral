@@ -39,7 +39,7 @@ class LiteralTransformer(ast.NodeTransformer):
         if isinstance(node, self.allowed_node_types):
             return super().visit(node)
         else:
-            raise TypeError(f"Unsupported node type: {type(node).__name__}")
+            raise TypeError(f"Unsupported type: {type(node).__name__}")
 
     def visit_Name(self, node):
         """Replace variable names with their values."""

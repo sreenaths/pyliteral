@@ -57,9 +57,9 @@ def test_visit_unsupported_node_type():
 
 def test_visit_name_not_defined():
     """Test visiting a Name node that is not defined raises NameError."""
-    transformer = LiteralTransformer({})
-    with pytest.raises(TypeError):
-        literal_eval("x + 1", transformer)
+    transformer = LiteralTransformer({"y": 1})
+    with pytest.raises(NameError):
+        literal_eval("{'a': x}", transformer)
 
 
 def test_visit_joined_str_with_invalid_value():

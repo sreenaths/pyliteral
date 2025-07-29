@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Union
+from typing import Union, Protocol, runtime_checkable
 
 
 Object = Union[
@@ -24,3 +24,9 @@ Object = Union[
     bool,
     None
 ]
+
+
+@runtime_checkable
+class FileLike(Protocol):
+    def read(self, *args, **kwargs) -> str: ...
+    """Method to read from the file-like object."""

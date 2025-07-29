@@ -13,18 +13,14 @@
 # limitations under the License.
 
 from pathlib import Path
-from typing import Union, Generator, Protocol, runtime_checkable
+from typing import Union, Generator
 from contextlib import contextmanager
 
-from .types import Object
-from .loads import loads
-from .consts import MAX_SIZE
+from pyliteral.types import Object, FileLike
+from pyliteral.loads import loads
+from pyliteral.consts import MAX_SIZE
+from pyliteral.exceptions import MaxSizeExceededError
 
-
-@runtime_checkable
-class FileLike(Protocol):
-    def read(self, *args, **kwargs) -> str: ...
-    """Method to read from the file-like object."""
 
 @contextmanager
 def _get_file(f: Union[str, Path, FileLike]) -> Generator[FileLike, None, None]:

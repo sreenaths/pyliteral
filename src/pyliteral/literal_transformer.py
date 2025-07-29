@@ -20,13 +20,16 @@ class LiteralTransformer(ast.NodeTransformer):
         self.replacements = replacements
         # Define the allowed node types - Other types including Set is not allowed.
         self.allowed_node_types = (
-            # Datatypes
+            # Collection types
             ast.Dict,
             ast.List,
             ast.Tuple,
             ast.Constant,
 
-            # Structural types
+            # Operation types
+            ast.UnaryOp, # +1, -1, ~1
+
+            # Additional types
             ast.Expression,
             ast.Name,
             ast.JoinedStr,

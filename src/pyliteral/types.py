@@ -16,9 +16,9 @@ from __future__ import annotations
 from typing import Union
 
 
-PYLTypes = Union[
-    "dict[str, PYLTypes]",
-    "list[PYLTypes]", "tuple[PYLTypes, ...]",
+Object = Union[
+    "dict[str, Object]",
+    "list[Object]", "tuple[Object, ...]",
     str,
     int, float,
     bool,

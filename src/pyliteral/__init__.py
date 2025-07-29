@@ -14,7 +14,7 @@
 
 from .load import load
 from .loads import loads
-from .types import PYLTypes
+from .types import Object
 
 
-__all__ = ["load", "loads", "PYLTypes"]
+__all__ = ["load", "loads", "Object"]

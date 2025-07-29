@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Union, Generator, Protocol, runtime_checkable
 from contextlib import contextmanager
 
-from .types import PYLTypes
+from .types import Object
 from .loads import loads
 from .consts import MAX_SIZE
 
@@ -56,7 +56,7 @@ def _get_file(f: Union[str, Path, FileLike]) -> Generator[FileLike, None, None]:
         raise TypeError("Expected a file path (str or Path) or a file-like object")
 
 
-def load(f: Union[str, Path, FileLike], max_size: int = MAX_SIZE) -> PYLTypes:
+def load(f: Union[str, Path, FileLike], max_size: int = MAX_SIZE) -> Object:
     """
     Load and parse a Python literal expression from a file.
 

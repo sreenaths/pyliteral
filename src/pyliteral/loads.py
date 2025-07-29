@@ -14,11 +14,11 @@
 
 import ast
 
-from .types import PYLTypes
+from .types import Object
 from .consts import MAX_SIZE
 
 
-def loads(s: str, max_size: int = MAX_SIZE) -> PYLTypes:
+def loads(s: str, max_size: int = MAX_SIZE) -> Object:
     """ Parse a Python literal expression from a string. """
 
     assert isinstance(s, str), "Input must be a string"

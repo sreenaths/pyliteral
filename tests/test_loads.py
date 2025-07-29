@@ -18,7 +18,7 @@ This module tests loading Python literal expressions from various sources.
 """
 
 import pytest
-from pyliteral.exceptions import MaxSizeExceededError
+from pyliteral.core.exceptions import MaxSizeExceededError
 from pyliteral.loads import loads
 
 

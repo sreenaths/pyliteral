@@ -16,10 +16,11 @@ from pathlib import Path
 from typing import Union, Generator
 from contextlib import contextmanager
 
-from pyliteral.types import Object, FileLike
+from pyliteral.core.types import Object, FileLike
+from pyliteral.core.consts import MAX_SIZE
+from pyliteral.core.exceptions import MaxSizeExceededError
+
 from pyliteral.loads import loads
-from pyliteral.consts import MAX_SIZE
-from pyliteral.exceptions import MaxSizeExceededError
 
 
 @contextmanager

@@ -24,7 +24,7 @@ import pytest
 from pathlib import Path
 from io import StringIO
 
-from pyliteral.exceptions import MaxSizeExceededError
+from pyliteral.core.exceptions import MaxSizeExceededError
 from pyliteral.load import load
 
 

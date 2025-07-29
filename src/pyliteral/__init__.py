@@ -14,7 +14,7 @@
 
 from .load import load
 from .loads import loads
-from .types import Object
+from .core.types import Object
 
 
 __all__ = ["load", "loads", "Object"]

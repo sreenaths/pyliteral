@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import ast
+from typing import Dict
 
-from pyliteral.exceptions import MaxSizeExceededError
+from pyliteral.core.exceptions import MaxSizeExceededError
+from pyliteral.core.types import Object
+from pyliteral.core.consts import MAX_SIZE
 
-from pyliteral.types import Object
-from pyliteral.consts import MAX_SIZE
 
-
-def loads(s: str, max_size: int = MAX_SIZE) -> Object:
+def loads(s: str, max_size: int = MAX_SIZE, vars: Dict[str, Object] = {}) -> Object:
     """ Parse a Python object from a literal string. """
 
     if not s:

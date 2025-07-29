@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Union, Protocol, runtime_checkable
+from typing import Dict, List, Tuple, Union, Protocol, runtime_checkable
 
 
 Object = Union[
-    "dict[str, Object]",
-    "list[Object]", "tuple[Object, ...]",
+    "Dict[str, Object]",
+    "List[Object]", "Tuple[Object, ...]",
     str,
     int, float,
     bool,

@@ -139,7 +139,7 @@ def test_single_quote_keys():
     assert result["a"] == 1
     assert result["b"] == 2
 
-# --- Test cases for error handling ---
+# --- Test error cases ---
 
 def test_err_loads_none():
     with pytest.raises(ValueError):
@@ -169,3 +169,13 @@ def test_err_loads_with_comments():
 def test_err_loads_max_size():
     with pytest.raises(MaxSizeExceededError):
         loads(SAMPLE_DICT, max_size=10)  # Exceeds max size of 10 characters
+
+
+def test_err_loads_dict_with_function_call():
+    with pytest.raises(TypeError):
+        loads('{"a": 1, "b": print("Hello")}')
+
+
+def test_err_loads_function_call():
+    with pytest.raises(TypeError):
+        loads('print("Hello")')

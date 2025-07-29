@@ -24,6 +24,8 @@ from pyliteral.loads import loads
 
 SAMPLE_DICT = '{"a": 1, "b": [2, 3], "c": None}'
 
+# --- Test cases for loading various basic Python literal expressions ---
+
 def test_loads_dict():
     result = loads(SAMPLE_DICT)
     assert isinstance(result, dict)
@@ -80,16 +82,90 @@ def test_loads_none():
     assert result is None
 
 
-def test_loads_invalid():
-    with pytest.raises(Exception):
-        loads('{invalid:}')
+def test_loads_max_size():
+    result = loads(SAMPLE_DICT, max_size=100)  # Should succeed within max size
+    assert isinstance(result, dict)
+    assert result["a"] == 1
 
 
-def test_loads_type_check():
-    with pytest.raises(Exception):
-        loads(123) # type: ignore
+# --- Test special cases ---
+
+def test_loads_with_comments():
+    s = '{"x": 1, # This is a comment\n"y": 2}'
+    result = loads(s)
+    assert isinstance(result, dict)
+    assert result["x"] == 1
+    assert result["y"] == 2
 
 
-def test_loads_max_size_assertion():
+def test_loads_multi_line_string():
+    multi_line_str = """This is a
+multi-line string."""
+
+    s = f'{{"x": """{multi_line_str}""", "y": 2}}'
+    result = loads(s)
+    assert isinstance(result, dict)
+    assert result["x"] == multi_line_str
+    assert result["y"] == 2
+
+
+def test_dict_with_single_quote_string():
+    s = '{"key": \'value\', "another_key": \'another_value\'}'
+    result = loads(s)
+    assert isinstance(result, dict)
+    assert result["key"] == "value"
+    assert result["another_key"] == "another_value"
+
+
+def test_loads_nested_structures():
+    s = '{"a": [1, 2, 3], "b": {"c": 4}}'
+    result = loads(s)
+    assert isinstance(result, dict)
+    assert result["a"] == [1, 2, 3]
+    assert result["b"] == {"c": 4}
+
+
+def test_loads_empty_dict():
+    s = '{}'
+    result = loads(s)
+    assert isinstance(result, dict)
+    assert result == {}
+
+
+def test_single_quote_keys():
+    s = "{'a': 1, 'b': 2}"
+    result = loads(s)  # Convert single quotes to double
+    assert isinstance(result, dict)
+    assert result["a"] == 1
+    assert result["b"] == 2
+
+# --- Test cases for error handling ---
+
+def test_err_loads_none():
+    with pytest.raises(ValueError):
+        loads(None)
+
+
+def test_err_loads_empty_string():
+    with pytest.raises(ValueError):
+        loads("")
+
+
+def test_err_loads_invalid_type():
+    with pytest.raises(TypeError):
+        loads(123)
+
+
+def test_err_loads_invalid_literal():
+    with pytest.raises(SyntaxError):
+        loads("invalid literal")
+
+
+def test_err_loads_with_comments():
+    with pytest.raises(SyntaxError):
+        loads('{"x": 1, # This is a comment "y": 2}')
+
+
+def test_err_loads_max_size():
     with pytest.raises(MaxSizeExceededError):
         loads(SAMPLE_DICT, max_size=10)  # Exceeds max size of 10 characters

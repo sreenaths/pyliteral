@@ -19,8 +19,10 @@ from pyliteral.core.exceptions import MaxSizeExceededError
 from pyliteral.core.types import Object
 from pyliteral.core.consts import MAX_SIZE
 
+from pyliteral.literal_transformer import LiteralTransformer
 
-def loads(s: str, max_size: int = MAX_SIZE, vars: Dict[str, Object] = {}) -> Object:
+
+def loads(s: str, max_size: int = MAX_SIZE, vars: Dict[str, Object] = None) -> Object:
     """ Parse a Python object from a literal string. """
 
     if not s:
@@ -32,4 +34,11 @@ def loads(s: str, max_size: int = MAX_SIZE, vars: Dict[str, Object] = {}) -> Obj
     if len(s) > max_size:
         raise MaxSizeExceededError(max_size)
 
-    return ast.literal_eval(s)
+    if vars is None:
+        vars = {}
+
+    tree: ast.Expression = ast.parse(s, mode="eval")
+    tree = LiteralTransformer(vars).visit(tree)
+    ast.fix_missing_locations(tree)
+
+    return ast.literal_eval(tree.body)

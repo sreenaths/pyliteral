@@ -24,6 +24,7 @@ import pytest
 from pathlib import Path
 from io import StringIO
 
+from pyliteral.exceptions import MaxSizeExceededError
 from pyliteral.load import load
 
 
@@ -96,3 +97,12 @@ def test_load_permission_error(monkeypatch):
     monkeypatch.setattr("builtins.open", raise_permission)
     with pytest.raises(PermissionError):
         load("/tmp/should_fail.txt")
+
+
+def test_loads_max_size_assertion():
+    with tempfile.NamedTemporaryFile('w+', delete=False, encoding='utf-8') as tmp:
+        tmp.write(SAMPLE_DICT)
+    with open(tmp.name, 'r', encoding='utf-8') as file_obj:
+        with pytest.raises(MaxSizeExceededError):
+            load(file_obj, max_size=10)
+        os.remove(tmp.name)

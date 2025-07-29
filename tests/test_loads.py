@@ -18,6 +18,7 @@ This module tests loading Python literal expressions from various sources.
 """
 
 import pytest
+from pyliteral.exceptions import MaxSizeExceededError
 from pyliteral.loads import loads
 
 
@@ -90,5 +91,5 @@ def test_loads_type_check():
 
 
 def test_loads_max_size_assertion():
-    with pytest.raises(Exception):
+    with pytest.raises(MaxSizeExceededError):
         loads(SAMPLE_DICT, max_size=10)  # Exceeds max size of 10 characters

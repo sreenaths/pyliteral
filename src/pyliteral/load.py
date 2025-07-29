@@ -74,4 +74,7 @@ def load(f: Union[str, Path, FileLike], max_size: int = MAX_SIZE) -> Object:
     """
     with _get_file(f) as file:
         content = file.read(max_size)
+        if len(file.read(1)) >= 1:
+            raise MaxSizeExceededError(max_size)
+
         return loads(content, max_size=max_size)

@@ -12,24 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import ast
+class MaxSizeExceededError(Exception):
+    """Raised when the input exceeds the maximum allowed size."""
 
-from pyliteral.exceptions import MaxSizeExceededError
-
-from pyliteral.types import Object
-from pyliteral.consts import MAX_SIZE
-
-
-def loads(s: str, max_size: int = MAX_SIZE) -> Object:
-    """ Parse a Python object from a literal string. """
-
-    if not s:
-        raise ValueError("Input string cannot be empty")
-
-    if not isinstance(s, str):
-        raise TypeError("Input must be a string")
-
-    if len(s) > max_size:
-        raise MaxSizeExceededError(max_size)
-
-    return ast.literal_eval(s)
+    def __init__(self, max_size: int):
+        super().__init__(f"Input exceeds maximum size of {max_size} characters.")
+        self.max_size = max_size
